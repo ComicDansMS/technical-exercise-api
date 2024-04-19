@@ -1,33 +1,29 @@
 import { Request, Response } from "express";
-import titleSearch from "../utils/titleSearch.js";
-import genreSearch from "../utils/genreSearch.js";
-import yearSearch from "../utils/yearSearch.js";
 import { Movie } from "../types/movie.js";
+import { SearchQuery } from "../types/searchQuery.js";
+import searchMovies from "../services/searchMovies.js";
 
 // Not sure on best practice in handling query parameter types.
 // I'm aware that this lacks error handling when casting the type.
 
-export const getMovies = (req: Request, res: Response): void => {
-  const title = req.query.title as string;
-  const genre = req.query.genre as string;
-  const year = parseInt(req.query.year as string) as number;
+class MoviesController {
 
-  const results: Movie[] = [];
-  
-  if (title) {
-    const titleResults: Movie[] = titleSearch(title);
-    results.push(...titleResults)
+  public getMovies(req: Request, res: Response): void  {
+    try {
+      const searchQuery: SearchQuery = {
+        title: req.query.title as string,
+        genre: req.query.genre as string,
+        year: parseInt(req.query.year as string) as number,
+      }
+    
+      const results: Movie[] = searchMovies(searchQuery);
+      
+      res.json(results);
+    } catch (error) {
+      res.status(500).send(`An error has occurred: ${error}`,)
+    }
   }
-  
-  if (genre) {
-    const genreResults: Movie[] = genreSearch(genre);
-    results.push(...genreResults)
-  }
-  
-  if (year) {
-    const yearResults: Movie[] = yearSearch(year);
-    results.push(...yearResults)
-  }
-  
-  res.json(results);
+
 }
+
+export default new MoviesController();
