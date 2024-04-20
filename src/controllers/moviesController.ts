@@ -13,7 +13,7 @@ class MoviesController {
       const searchQuery: SearchQuery = {
         title: req.query.title as string,
         genre: req.query.genre as string,
-        year: parseInt(req.query.year as string) as number,
+        year: req.query.year && parseInt(req.query.year as string) as number,
       }
     
       const results: Movie[] = searchMovies(searchQuery);

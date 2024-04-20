@@ -1,6 +1,8 @@
 import type { Movie } from '../types/movie.js';
+import Indexes from "./../services/indexes.js";
 
-export default function filterYear(year: number, movies: Movie[]): Movie[] {
-  const results: Movie[] = movies.filter(movie => movie.year === year);
+export default function filterYear(year: number): Movie[] {
+  const yearIndex = Indexes.getYearIndex();
+  const results = yearIndex[year];
   return results;
 }

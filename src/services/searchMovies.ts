@@ -9,21 +9,21 @@ export default function searchMovies(query: SearchQuery) {
   const { title, genre, year } = query;
   const movies = moviesData as Movie[];
   const results: Movie[] = [];
-      
-  if (title) {
+
+  if (title && !genre && !year) {
     const titleResults: Movie[] = filterTitle(title, movies);
     results.push(...titleResults)
   }
-  
-  if (genre) {
-    const genreResults: Movie[] = filterGenre(genre, movies);
+
+  if (genre && !title && !year) {
+    const genreResults: Movie[] = filterGenre(genre);
     results.push(...genreResults)
   }
   
-  if (year) {
-    const yearResults: Movie[] = filterYear(year, movies);
+  if (year && !title && !genre) {
+    const yearResults: Movie[] = filterYear(year);
     results.push(...yearResults)
   }
-
+  
   return results;
 }
