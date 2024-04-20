@@ -1,6 +1,6 @@
 import { Movie } from '../types/movie.js';
 import { Index } from '../types/index.js';
-import moviesData from '../../data/movies.json';
+import moviesData from '../../data/movies.json' assert { type: 'json' };
 
 class Indexes {
 	private movies: Movie[];

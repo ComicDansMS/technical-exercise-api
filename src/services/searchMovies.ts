@@ -1,29 +1,27 @@
 import { Movie } from "../types/movie.js";
 import { SearchQuery } from "../types/searchQuery.js";
-import moviesData from '../../data/movies.json'
-import filterTitle from "./filterTitle.js";
+import moviesData from '../../data/movies.json' assert { type: 'json' };
 import filterGenre from "./filterGenre.js";
+import filterTitle from "./filterTitle.js";
 import filterYear from "./filterYear.js";
 
 export default function searchMovies(query: SearchQuery) {
   const { title, genre, year } = query;
-  const movies = moviesData as Movie[];
-  const results: Movie[] = [];
+  let results: Movie[] = moviesData as Movie[];
 
-  if (title && !genre && !year) {
-    const titleResults: Movie[] = filterTitle(title, movies);
-    results.push(...titleResults)
+  if (year) {
+    results = filterYear.indexedFilter(year);
   }
 
-  if (genre && !title && !year) {
-    const genreResults: Movie[] = filterGenre(genre);
-    results.push(...genreResults)
+  if (genre && !year) {
+    results = filterGenre.indexedFilter(genre);
+  } else if (genre) {
+    results = filterGenre.nonIndexedFilter(genre, results);
   }
-  
-  if (year && !title && !genre) {
-    const yearResults: Movie[] = filterYear(year);
-    results.push(...yearResults)
+
+  if (title) {
+    results = filterTitle.nonIndexedFilter(title, results);
   }
-  
+
   return results;
 }
