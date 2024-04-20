@@ -18,12 +18,7 @@ class MoviesController {
     
       const results: Movie[] = searchMovies(searchQuery);
       
-      res.json({
-        count: results.length,
-        movies: [
-          ...results
-        ]
-      });
+      res.json(results);
     } catch (error) {
       res.status(500).send(`An error has occurred: ${error}`,)
     }
