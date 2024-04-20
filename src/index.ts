@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import moviesRoutes from './routes/moviesRoutes.js'
 import generateIndexes from "./services/indexes.js";
+import authenticate from "./services/authenticate.js";
 
 dotenv.config();
 
@@ -11,7 +12,7 @@ const port: string | number = process.env.PORT || 3000;
 // Initialises any required indexes of movies data
 generateIndexes.init();
 
-app.use('/api/movies', moviesRoutes);
+app.use('/api/movies', authenticate, moviesRoutes);
 
 app.listen(port, () => {
   console.log(`Movies API listening on port ${port}`);
