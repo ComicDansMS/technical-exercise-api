@@ -6,7 +6,7 @@
 2. Create the `.env` file based on the `.env.example`
   - Setting a port is optional. By default, port 3000 is used
   - You must specify an array of API keys for authentication purposes. The default `123456789` is what the frontend client uses.
-3. Run `npm run dev`
+3. Run `npm start`
 
 ## Usage
 
