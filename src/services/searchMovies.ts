@@ -9,8 +9,6 @@ export default function searchMovies(query: SearchQuery) {
   const { title, genres, years } = query;
   let results: Movie[] = moviesData as Movie[];
 
-  console.log({ title, genres, years })
-
   if (years.length) {
     results = filterYear.indexed(years);
   }

@@ -2,8 +2,6 @@ import { Request } from "express";
 import { SearchQuery } from "../types/searchQuery.js";
 
 export default function parseQueryParams(req: Request): SearchQuery {
-  console.log(req.query)
-
   const queryParams: SearchQuery = {
     title: getStringQueryParam(req.query.title),
     genres: getStringArrayQueryParam(req.query.genre),
