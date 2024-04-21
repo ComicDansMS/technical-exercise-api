@@ -20,7 +20,7 @@ class FilterGenre {
   }
 
   public indexed(genres: string[]): Movie[] {
-    const genreIndex = Indexes.getGenreIndex();
+    const genreIndex = Indexes.getGenreIndex;
     const results: Movie[] = [];
 
     genres.forEach(genre => {
