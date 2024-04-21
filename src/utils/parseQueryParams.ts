@@ -6,6 +6,7 @@ export default function parseQueryParams(req: Request): SearchQuery {
     title: getStringQueryParam(req.query.title),
     genres: getStringArrayQueryParam(req.query.genre),
     years: getNumberArrayQueryParam(req.query.year),
+    limit: parseInt(getStringQueryParam(req.query.limit))
   }
   
   return queryParams;

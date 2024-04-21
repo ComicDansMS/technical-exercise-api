@@ -6,7 +6,7 @@ import filterTitle from "./filterTitle.js";
 import filterYear from "./filterYear.js";
 
 export default function searchMovies(query: SearchQuery) {
-  const { title, genres, years } = query;
+  const { title, genres, years, limit } = query;
   let results: Movie[] = moviesData as Movie[];
 
   if (years.length) {
@@ -22,6 +22,10 @@ export default function searchMovies(query: SearchQuery) {
   if (title) {
     results = filterTitle.nonIndexed(title, results);
   }
+  if (limit) {
+    return results.slice(0, limit);
+  } else {
+    return results;
+  }
 
-  return results;
 }
