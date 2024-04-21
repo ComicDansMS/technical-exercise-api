@@ -45,7 +45,5 @@ export default function relatedMoviesByCast(movies: Movie[]): Movie[] {
     }
   });
 
-  console.log('results.length', results.length)
-
   return results;
 }
