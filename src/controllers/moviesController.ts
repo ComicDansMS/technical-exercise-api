@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Movie } from "../types/movie.js";
 import { SearchQuery } from "../types/searchQuery.js";
 import searchMovies from "../services/searchMovies.js";
-import parseQueryParams from "../utils/parseQueryParams.js";
+import parseQueryParams from "../helpers/parseQueryParams.js";
 
 class MoviesController {
 
