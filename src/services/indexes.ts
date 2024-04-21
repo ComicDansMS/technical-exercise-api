@@ -1,9 +1,11 @@
 import { Movie } from '../types/movie.js';
 import { Index } from '../types/index.js';
 import moviesData from '../../data/movies.json' assert { type: 'json' };
+import createMovieId from '../utils/createMovieId.js';
 
 class Indexes {
 	private movies: Movie[];
+	private titleIndex: Index = {};
 	private genreIndex: Index = {};
 	private yearIndex: Index = {};
 
@@ -12,29 +14,37 @@ class Indexes {
 	}
 
 	public init(): void {
-		this.generateGenreIndex();
-		this.generateYearIndex();
+		this.movies.forEach(movie => {
+			this.titleIndexItem(movie);
+			this.genreIndexItem(movie);
+			this.yearIndexItem(movie);
+		})
 	}
 
-	private generateGenreIndex(): void {
-		this.movies.forEach(movie => {
-			movie.genres.forEach(genre => {
-				const key = genre.toLowerCase();
-				if (!this.genreIndex[key]) {
-					this.genreIndex[key] = [];
-				}
-				this.genreIndex[key].push(movie);
-			});
+	private titleIndexItem(movie: Movie): void {
+		const id = createMovieId(movie);
+
+		if (!this.titleIndex[id]) {
+			this.titleIndex[id] = [];
+		}
+		this.titleIndex[id].push(movie);
+	}
+
+	private genreIndexItem(movie: Movie): void {
+		movie.genres.forEach(genre => {
+			const key = genre.toLowerCase();
+			if (!this.genreIndex[key]) {
+				this.genreIndex[key] = [];
+			}
+			this.genreIndex[key].push(movie);
 		});
 	}
 
-	private generateYearIndex(): void {
-		this.movies.forEach(movie => {
-				if (!this.yearIndex[movie.year]) {
-					this.yearIndex[movie.year] = [];
-				}
-				this.yearIndex[movie.year].push(movie);
-		});
+	private yearIndexItem(movie: Movie): void {
+		if (!this.yearIndex[movie.year]) {
+			this.yearIndex[movie.year] = [];
+		}
+		this.yearIndex[movie.year].push(movie);
 	}
 
 	public getGenreIndex(): Index {
