@@ -6,21 +6,23 @@ import filterTitle from "./filterTitle.js";
 import filterYear from "./filterYear.js";
 
 export default function searchMovies(query: SearchQuery) {
-  const { title, genre, year } = query;
+  const { title, genres, years } = query;
   let results: Movie[] = moviesData as Movie[];
 
-  if (year) {
-    results = filterYear.indexedFilter(year);
+  console.log({ title, genres, years })
+
+  if (years.length) {
+    results = filterYear.indexed(years);
   }
 
-  if (genre && !year) {
-    results = filterGenre.indexedFilter(genre);
-  } else if (genre) {
-    results = filterGenre.nonIndexedFilter(genre, results);
+  if (genres.length && years.length === 0) {
+    results = filterGenre.indexed(genres);
+  } else if (genres.length) {
+    results = filterGenre.nonIndexed(genres, results);
   }
 
   if (title) {
-    results = filterTitle.nonIndexedFilter(title, results);
+    results = filterTitle.nonIndexed(title, results);
   }
 
   return results;

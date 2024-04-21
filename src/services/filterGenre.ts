@@ -3,19 +3,31 @@ import Indexes from "./../services/indexes.js";
 
 class FilterGenre {
 
-  public nonIndexedFilter(genre: string, movies: Movie[]): Movie[] {
-    const searchGenre = genre.toLowerCase();
+  public nonIndexed(genres: string[], movies: Movie[]): Movie[] {
+    const results: Movie[] = [];
 
-    const results: Movie[] = movies.filter(movie => {
-      return movie.genres.some(movieGenre => movieGenre.toLowerCase() === searchGenre);
-    });
+    genres.forEach(genre => {
+      const searchGenre = genre.toLowerCase();
+
+      const filtered: Movie[] = movies.filter(movie => {
+        return movie.genres.some(movieGenre => movieGenre.toLowerCase() === searchGenre);
+      });
+
+      results.push(...filtered);
+    })
+
     return results;
   }
 
-  public indexedFilter(genre: string): Movie[] {
+  public indexed(genres: string[]): Movie[] {
     const genreIndex = Indexes.getGenreIndex();
-    const genreKey = genre.toLowerCase();
-    const results = genreIndex[genreKey] || [];
+    const results: Movie[] = [];
+
+    genres.forEach(genre => {
+      const genreKey = genre.toLowerCase();
+      results.push(...genreIndex[genreKey])
+    })
+
     return results;
   }
 

@@ -3,9 +3,14 @@ import Indexes from "./../services/indexes.js";
 
 class FilterYear {
 
-  public indexedFilter(year: number): Movie[] {
+  public indexed(years: number[]): Movie[] {
     const yearIndex = Indexes.getYearIndex();
-    const results = yearIndex[year];
+    const results: Movie[] = [];
+
+    years.forEach(year => {
+      results.push(...yearIndex[year]);
+    })
+
     return results;
   }
   
